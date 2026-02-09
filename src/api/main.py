@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException, Body
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import sys
@@ -109,6 +111,31 @@ def chat(req: ChatRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# Serve static files (React build)
+# Assumes build is in ../../web/dist relative to this file
+# AND that the Dockerfile copies it to /app/web/dist or similar
+# We'll use a relative path here that works locally AND in Docker if structured right.
+# In Docker: /app/web/dist
+# Locally: ../../web/dist
+
+# Construct absolute path to static folder
+import pathlib
+static_path = pathlib.Path(__file__).parent.parent.parent / "web" / "dist"
+
+if static_path.exists():
+    app.mount("/assets", StaticFiles(directory=static_path / "assets"), name="assets")
+
+    # Catch-all for SPA (return index.html)
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        index_file = static_path / "index.html"
+        if index_file.exists():
+             return FileResponse(index_file)
+        return {"error": "Frontend not built. Run 'npm run build' in web/"}
+else:
+    print(f"Warning: Static files not found at {static_path}. Frontend will not be served.")
 
 if __name__ == "__main__":
     import uvicorn
