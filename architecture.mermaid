@@ -1,0 +1,23 @@
+graph TD
+    User[User / Operator] -->|Natural Language| UI[React Frontend]
+    UI -->|API Request| API[FastAPI Orchestrator]
+    
+    subgraph "Agentic Core (Powered by Gemini 3)"
+        API -->|Delegates| Orch[Orchestrator Agent]
+        Orchestrator -->|Queries| SB[Scenario Builder]
+        Orchestrator -->|Map-Reduce| RA1[Region 0 Agent]
+        Orchestrator -->|Map-Reduce| RA2[Region 1 Agent]
+        Orchestrator -->|Map-Reduce| RAn[Region N Agent]
+    end
+    
+    subgraph "Physics Engine"
+        SB -->|Modifies| Net[Pandapower Network]
+        RA1 -->|Reads| Net
+        RA2 -->|Reads| Net
+        RAn -->|Reads| Net
+    end
+    
+    RA1 -->|Analysis| Orch
+    RA2 -->|Analysis| Orch
+    RAn -->|Analysis| Orch
+    Orchestrator -->|Synthesized Response| UI
