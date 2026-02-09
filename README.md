@@ -29,21 +29,42 @@ The system consists of:
 - Node.js 16+
 - Google Cloud API Key (with Gemini access)
 
-### 1. Backend Setup
+### 1. Backend Setup (Required for both CLI and Web)
+1.  **Install Dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2.  **Configure Environment**:
+    Create a `.env` file in the root directory and add your Google Cloud API key:
+    ```env
+    GOOGLE_API_KEY=your_key_here
+    ```
+
+### 2. Running the System
+You can run the system in two modes: **CLI** (Terminal) or **Web** (Browser).
+
+#### Option A: CLI Mode (Interactive Terminal)
+Run the main script from the root directory:
 ```bash
-cd .
-pip install -r requirements.txt
-# Create a .env file with your API key
-# GOOGLE_API_KEY=your_key_here
-uvicorn src.api.main:app --reload
+python main.py
 ```
 
-### 2. Frontend Setup
+#### Option B: Web Mode (Dashboard)
+You need to run both the Backend API and the Frontend (in separate terminals).
+
+**Terminal 1: Backend API**
+```bash
+uvicorn src.api.main:app --reload
+```
+*The API will start at http://127.0.0.1:8000*
+
+**Terminal 2: Frontend**
 ```bash
 cd web
-npm install
+npm install  # Only needed once
 npm run dev
 ```
+*The Dashboard will be available at http://localhost:5173*
 
 ## 🎮 How to Demo
 See [Demo Storyboard](demo%20storyboard.md) for a step-by-step guide to showcasing the project.
