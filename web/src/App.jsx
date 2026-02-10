@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Dashboard from './components/Dashboard'
 import ChatInterface from './components/ChatInterface'
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 function App() {
     const [stats, setStats] = useState(null);

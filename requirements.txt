@@ -1,11 +1,11 @@
 fastapi
-uvicorn
 pydantic
-python-dotenv
 pandas
 numpy
 google-genai
 pandapower
 networkx
 scipy
-requests
+uvicorn
+gunicorn
+python-dotenv
