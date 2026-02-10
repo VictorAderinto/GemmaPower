@@ -9,3 +9,4 @@ scipy
 uvicorn
 gunicorn
 python-dotenv
+tabulate
