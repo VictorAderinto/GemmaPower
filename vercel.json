@@ -1,13 +1,6 @@
 {
     "builds": [
         {
-            "src": "src/api/main.py",
-            "use": "@vercel/python",
-            "config": {
-                "excludeFiles": "web/**"
-            }
-        },
-        {
             "src": "web/package.json",
             "use": "@vercel/static-build",
             "config": {
@@ -16,10 +9,6 @@
         }
     ],
     "routes": [
-        {
-            "src": "/api/(.*)",
-            "dest": "src/api/main.py"
-        },
         {
             "src": "/(.*)",
             "dest": "web/$1"
