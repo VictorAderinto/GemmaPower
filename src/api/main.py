@@ -112,7 +112,6 @@ def chat(req: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 # Serve static files (React build)
 # Assumes build is in ../../web/dist relative to this file
 # AND that the Dockerfile copies it to /app/web/dist or similar
@@ -138,5 +137,7 @@ else:
     print(f"Warning: Static files not found at {static_path}. Frontend will not be served.")
 
 if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
