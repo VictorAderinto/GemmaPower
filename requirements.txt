@@ -4,11 +4,8 @@ pydantic
 python-dotenv
 pandas
 numpy
-scikit-learn
 google-genai
 pandapower
 networkx
-matplotlib
-requests
-gunicorn
 scipy
+requests

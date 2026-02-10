@@ -3,7 +3,7 @@ import pandapower.networks as pn
 import pandas as pd
 import json
 import numpy as np
-from sklearn.cluster import KMeans
+from scipy.cluster.vq import kmeans2
 
 def load_network(name="case57"):
     """
@@ -65,8 +65,9 @@ def cluster_spatially(net, n_clusters=4):
 
     # 2. Perform K-Means Clustering
     X = np.array(coords)
-    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
-    labels = kmeans.fit_predict(X)
+    # scipy.cluster.vq.kmeans2 returns (centroids, labels)
+    # minit='points' selects initial centroids from data points
+    _, labels = kmeans2(X, k=n_clusters, minit='points')
 
     # 3. Assign labels back to buses
     net.bus['cluster'] = -1 # Default for missing coords
