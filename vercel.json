@@ -2,7 +2,10 @@
     "builds": [
         {
             "src": "src/api/main.py",
-            "use": "@vercel/python"
+            "use": "@vercel/python",
+            "config": {
+                "excludeFiles": "web/**"
+            }
         },
         {
             "src": "web/package.json",
